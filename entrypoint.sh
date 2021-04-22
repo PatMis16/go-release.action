@@ -17,7 +17,7 @@ UPLOAD_URL=$(echo $EVENT_DATA | jq -r .release.upload_url)
 UPLOAD_URL=${UPLOAD_URL/\{?name,label\}/}
 RELEASE_NAME=$(echo $EVENT_DATA | jq -r .release.tag_name)
 #PROJECT_NAME=$(basename $GITHUB_REPOSITORY)
-PROJECT_NAME=$GITHUB_REPOSITORY
+PROJECT_NAME=$(echo $GITHUB_REPOSITORY | awk -F/ '{print $2}')
 NAME="${NAME:-${PROJECT_NAME}_${RELEASE_NAME}}_${GOOS}_${GOARCH}"
 
 if [ -z "${EXTRA_FILES+x}" ]; then
